@@ -12,6 +12,6 @@ Main components:
   * The lambdas in this step function first connect to a Redshift cluster and writes the data from the csv into a table in the cluster.
   * The second half of the step function logs the metadata into a DynamoDB table to keep track of the flow through the ETL pipeline.
   
-1. Pipeline Monitoring API
+2. Pipeline Monitoring API
   * Provides a REST API endpoint via Amazon API Gateway for querying processing logs
   * API calls take in table_name as a parameter, landed_timestamp as an optional additional parameter.
