@@ -52,7 +52,16 @@ Truncating Data
 
 Defining/Updating Schema
 
-* This pipeline also supports updating existing table schema or creating new tables by defining a schema. Attached below is an example schema file to define a user_data table.
+* This pipeline also supports updating existing table schema or creating new tables by defining a schema. Below is an example .json schema file to define a user data table
+
+![Architecture Diagram](./schema_example.png)
+
+* In this example we are creating a table with Username, Identifier, First name and Last name columns. We also defined allowed_operations to only permit truncate and append operations. If we want to also allow schema updates then we could include that in the allowed_actions field.
+
+
+# Summary
+
+I recently completed both the AWS Certified Solutions Architect Associate and the AWS Certified Data Engineer Associate exams. I built this project to get hands on experience with AWS and apply what I have learned through the certification process. 
 
 
 
