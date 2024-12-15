@@ -36,12 +36,7 @@ Appending Data
 
 * Consider we have a table in Redshift called user_data, in the dev database with the following schema/entries
 
-   Username,Identifier,First name,Last name
-   booker12,9012,Rachel,Booker
-   grey07,2070,Laura,Grey
-   johnson81,4081,Craig,Johnson
-   jenkins46,9346,Mary,Jenkins
-   smith79,5079,Jamie,Smith
+   ![Example Data](./user_data_example.png)
 
 * If we want to append to the table to include a new set of users, with this pipeline it is very simple. All you have to do is take a new .csv file with the same schema as the current table, upload it to the follwoing path in the S3 bucket db_name/append/table_name/data.csv. The pipeline will automatically process the data and will be loaded into the Redshfit table and the metadata will be logged in DynamoDB.
 
@@ -54,7 +49,7 @@ Defining/Updating Schema
 
 * This pipeline also supports updating existing table schema or creating new tables by defining a schema. Below is an example .json schema file to define a user data table
 
-![Architecture Diagram](./schema_example.png)
+![Example Schema](./schema_example.png)
 
 * In this example we are creating a table with Username, Identifier, First name and Last name columns. We also defined allowed_operations to only permit truncate and append operations. If we want to also allow schema updates then we could include that in the allowed_actions field.
 
