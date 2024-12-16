@@ -10,9 +10,9 @@ Main components:
   * An S3 bucket serves as the central data lake.
     * Using prefixes, the S3 bucket allows users easily to append/truncate data or define/update schema.
     * The structure of the bucket is as follows: db_name/action/table_name/data.csv (action = append/truncate/schema).
-    * Data is expected to be .csv format and schema files .json format.
+    * Data is expected to be .csv format 
   * When a file is uploaded to the bucket, an EventBridge event is triggered. This event initiates a step function.
-  * The first lambda in this step function determines the action based on the file prefix. It then constructs an appropriate SQL query based on this to either         load data, update schema, or define new table/schema. I made use of the psycopg2 library to connect to my Redshift cluster and run queries.
+  * The first lambda in this step function determines the action based on the file prefix. It then constructs an appropriate SQL query based on this to either load data, update schema, or define new table/schema. I made use of the psycopg2 library to connect to my Redshift cluster and run queries.
   * The second lambda of the step function logs the metadata into a DynamoDB table to keep track of the flow through the ETL pipeline.
   
 2. Pipeline Monitoring API
@@ -47,14 +47,6 @@ Truncating Data
 
 * Consider the same table from the example above, this time instead of adding new users we want to replace the current users with a new set. Again, this is very easy to do with this pipeline. Simply upload a new .csv file to the S3 bucket, with the same schema as the existing table, at db_name/truncate/table_name/data.csv. The pipeline will automatically truncate the existing table and you will be left with only the new data uploaded.
 
-
-Defining/Updating Schema
-
-* This pipeline also supports updating existing table schema or creating new tables by defining a schema. Below is an example .json schema file to define a user data table
-
-![Example Schema](./schema_example.png)
-
-* In this example we are creating a table with Username, Identifier, First name and Last name columns. We also defined allowed_operations to only permit truncate and append operations. If we want to also allow schema updates then we could include that in the allowed_actions field.
 
 # Summary
 
