@@ -21,7 +21,7 @@ Main components:
 
 # Architecture
 
-* S3: Serves as our data lake.
+* S3: Serves as a data lake.
 * EventBridge: Triggers state machine to execute step function.
 * Step Function: Orchestrates execution of Lambda functions.
 * Lambda: Processes file uploads into S3, takes appropriate action in Redshift and logs processing information into DynamoDB.
@@ -52,7 +52,6 @@ Defining/Updating Schema
 ![Example Schema](./schema_example.png)
 
 * In this example we are creating a table with Username, Identifier, First name and Last name columns. We also defined allowed_operations to only permit truncate and append operations. If we want to also allow schema updates then we could include that in the allowed_actions field.
-
 
 # Summary
 
