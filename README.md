@@ -31,7 +31,7 @@ Main components:
 
 # Diagram of Architecture
 
-![Architecture Diagram](./Diagram.pdf)
+![Architecture Diagram](./Diagram.png)
 
 # Example Usage
 
