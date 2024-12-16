@@ -31,7 +31,7 @@ Main components:
 
 # Diagram of Architecture
 
-![Architecture Diagram](./Diagram.png)
+![Architecture Diagram](./AWSProjectDiagram.png)
 
 # Example Usage
 
