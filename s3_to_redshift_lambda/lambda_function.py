@@ -56,7 +56,9 @@ def lambda_handler(event, context):
     # Fetch the latest schema file key from S3 for this table
     schema_file_key = get_latest_schema_key(s3, s3_bucket, table_name, database_name, action)
     # Load and parse the schema JSON
-    schema_data = get_schema_from_s3(s3, s3_bucket, schema_file_key)
+    obj = s3.get_object(Bucket=s3_bucket, Key=key)
+    schema_data = json.loads(obj['Body'].read())
+ 
     schema_version = schema_data.get('schema_version', 'unknown')
 
     # If action is append or truncate, validate the incoming CSV columns against the schema
@@ -146,8 +148,7 @@ def get_schema_from_s3(s3, s3_bucket, key):
     """
     Retrieves and parses the schema JSON file from S3.
     """
-    obj = s3.get_object(Bucket=s3_bucket, Key=key)
-    return json.loads(obj['Body'].read())
+    
 
 def validate_csv_against_schema(s3, bucket, key, schema_data):
     """
