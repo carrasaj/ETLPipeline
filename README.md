@@ -41,12 +41,15 @@ Appending Data
 
    ![Example Data](./user_data_example.png)
 
-* If we want to append to the table to include a new set of users, with this pipeline it is very simple. All you have to do is take a new .csv file with the same schema as the current table, upload it to the follwoing path in the S3 bucket db_name/append/table_name/data.csv. The pipeline will automatically process the data and will be loaded into the Redshfit table and the metadata will be logged in DynamoDB.
+* If we want to append to the table to include a new set of users, with this pipeline it is very simple. All you have to do is take a new .csv file with the same schema as the current table, upload it to the follwoing path in the S3 bucket db_name/append/table_name/. The pipeline will automatically process the data and will be loaded into the Redshfit table and the metadata will be logged in DynamoDB.
 
 Truncating Data
 
-* Consider the same table from the example above, this time instead of adding new users we want to replace the current users with a new set. Again, this is very easy to do with this pipeline. Simply upload a new .csv file to the S3 bucket, with the same schema as the existing table, at db_name/truncate/table_name/data.csv. The pipeline will automatically truncate the existing table and you will be left with only the new data uploaded.
+* Consider the same table from the example above, this time instead of adding new users we want to replace the current users with a new set. Again, this is very easy to do with this pipeline. Simply upload a new .csv file to the S3 bucket, with the same schema as the existing table, at db_name/truncate/table_name/. The pipeline will automatically truncate the existing table and you will be left with only the new data uploaded.
 
+Schema Change
+
+This pipeline can also handle changes to schema. For this exaple we have the same table from above but want to drop the last name column. We can simply upload a new csv file to the db_name/schema/table_name/ path in S3. The lambda function will parse the data, drop the existing table and recreate with the newly defined columns and data.
 
 # Summary
 
