@@ -52,13 +52,11 @@ def lambda_handler(event, context):
     user = os.getenv('user')
     password = os.getenv('password')
     iam_arn = os.getenv('redshift_iam_arn')
-    # If schema files are stored in a different bucket, use 'schema_bucket', otherwise default to s3_bucket
-    schema_bucket = os.getenv('schema_bucket', s3_bucket)
 
     # Fetch the latest schema file key from S3 for this table
-    schema_file_key = get_latest_schema_key(s3, schema_bucket, table_name, database_name, action)
+    schema_file_key = get_latest_schema_key(s3, s3_bucket, table_name, database_name, action)
     # Load and parse the schema JSON
-    schema_data = get_schema_from_s3(s3, schema_bucket, schema_file_key)
+    schema_data = get_schema_from_s3(s3, s3_bucket, schema_file_key)
     schema_version = schema_data.get('schema_version', 'unknown')
 
     # If action is append or truncate, validate the incoming CSV columns against the schema
@@ -128,27 +126,27 @@ def lambda_handler(event, context):
 
     return output
 
-def get_latest_schema_key(s3, schema_bucket, table_name, database_name, action):
+def get_latest_schema_key(s3, s3_bucket, table_name, database_name, action):
     """
     Finds the latest schema file for the given table by listing objects in the schema directory and
     selecting the one with the most recent timestamp in its key. Assumes schema files follow a naming
     convention like schema_<timestamp>.json.
     """
     prefix = f"dev/schema/{table_name}/"
-    response = s3.list_objects_v2(Bucket=schema_bucket, Prefix=prefix)
+    response = s3.list_objects_v2(Bucket=s3_bucket, Prefix=prefix)
     if 'Contents' not in response or not response['Contents']:
-        raise ValueError(f"No schema files found under {prefix} in {schema_bucket}")
+        raise ValueError(f"No schema files found under {prefix} in {s3_bucket}")
 
     # Select the latest schema file by comparing keys (filenames)
     objects = response['Contents']
     latest = max(objects, key=lambda x: x['Key'])
     return latest['Key']
 
-def get_schema_from_s3(s3, schema_bucket, key):
+def get_schema_from_s3(s3, s3_bucket, key):
     """
     Retrieves and parses the schema JSON file from S3.
     """
-    obj = s3.get_object(Bucket=schema_bucket, Key=key)
+    obj = s3.get_object(Bucket=s3_bucket, Key=key)
     return json.loads(obj['Body'].read())
 
 def validate_csv_against_schema(s3, bucket, key, schema_data):
