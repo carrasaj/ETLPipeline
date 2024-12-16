@@ -29,6 +29,9 @@ Main components:
 * DynamoDB: Logs metadata and keeps track of data flowing through pipeline.
 * API Gateway: Provies an API for querying the DynamoDB table
 
+# Diagram of Architecture
+
+![Architecture Diagram](./Diagram.pdf)
 
 # Example Usage
 
