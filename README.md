@@ -49,7 +49,11 @@ Truncating Data
 
 Schema Change
 
-This pipeline can also handle changes to schema. For this exaple we have the same table from above but want to drop the last name column. We can simply upload a new csv file to the db_name/schema/table_name/ path in S3. The lambda function will parse the data, drop the existing table and recreate with the newly defined columns and data.
+* This pipeline can also handle changes to schema. For this exaple we have the same table from above but want to drop the last name column.
+
+![Schema Example](./schema_update.png)
+
+* We can simply upload a new csv file to the    db_name/schema/table_name/ path in S3. The lambda function will parse the data, drop the existing table and recreate with the newly defined columns and data.
 
 # Summary
 
