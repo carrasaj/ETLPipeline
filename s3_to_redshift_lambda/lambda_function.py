@@ -143,13 +143,7 @@ def get_latest_schema_key(s3, s3_bucket, table_name, database_name, action):
     objects = response['Contents']
     latest = max(objects, key=lambda x: x['Key'])
     return latest['Key']
-
-def get_schema_from_s3(s3, s3_bucket, key):
-    """
-    Retrieves and parses the schema JSON file from S3.
-    """
     
-
 def validate_csv_against_schema(s3, bucket, key, schema_data):
     """
     Compares the CSV header against the schema-defined columns to ensure a match.
