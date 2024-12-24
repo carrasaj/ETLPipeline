@@ -1,4 +1,4 @@
-## ETL Pipeline
+## AWS Automated Data Pipeline
 
 This project is an automated data pipeline I built using AWS. It is meant to automatically process data uploaded to an S3 data lake, and perform appropriate actions to load into a Redshift data warehouse for future analytics. The metadata is logged into DynamoDB to track the flow of data in the pipeline. I created an API using API Gateway to allow simple querying of the logging table.
 
